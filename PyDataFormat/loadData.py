@@ -2,7 +2,7 @@
 Load the reference and candidate json files, which are to be evaluated using CIDEr.
 
 Reference file: list of dict('image_id': image_id, 'caption': caption).
-Candidate file: list of dict('image_id': image_id, 'caption': caption). One caption per image.
+Candidate file: list of dict('image_id': image_id, 'caption': caption).
 
 """
 import pdb
@@ -14,7 +14,7 @@ class LoadData():
     def __init__(self, path):
         self.pathToData = path
 
-    def readjson(self, refname, candname):
+    def readJson(self, refname, candname):
 
         path_to_ref_file = os.path.join(self.pathToData, refname)
         path_to_cand_file = os.path.join(self.pathToData, candname)

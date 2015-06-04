@@ -34,6 +34,6 @@ class CIDErEvalCap:
         for scorer, method in scorers:
             print 'computing %s score...' % (scorer.method())
             score, scores = scorer.compute_score(self.gts, self.res)
-            print "%s: %0.3f" % (method, score)
+            print "Mean %s score: %0.3f" % (method, score)
             metric_scores[method] = list(scores)
         return metric_scores

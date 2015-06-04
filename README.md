@@ -7,6 +7,8 @@ CIDEr-D (CIDEr Defended) which is more robust to gaming effects.
 - java 1.8.0
 - python 2.7
 
+For running the ipython notebook file, update your Ipython to [Jupyter](https://jupyter.org/)
+
 ## Files ##
 ./
 - cidereval.py (demo script)
