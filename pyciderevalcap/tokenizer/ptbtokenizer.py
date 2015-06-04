@@ -25,6 +25,8 @@ PUNCTUATIONS = ["''", "'", "``", "`", "-LRB-", "-RRB-", "-LCB-", "-RCB-", \
 
 class PTBTokenizer:
     """Python wrapper of Stanford PTBTokenizer"""
+    def __init__(self, _source='gts'):
+        self.source = _source
 
     def tokenize(self, captions_for_image):
         cmd = ['java', '-cp', STANFORD_CORENLP_3_4_1_JAR, \
@@ -34,10 +36,18 @@ class PTBTokenizer:
         # ======================================================
         # prepare data for PTB Tokenizer
         # ======================================================
-        final_tokenized_captions_for_image = {}
-        image_id = [k for k, v in captions_for_image.items() for _ in range(len(v))]
 
-        sentences = '\n'.join([c['caption'].replace('\n', ' ') for k, v in captions_for_image.items() for c in v])
+        if self.source == 'gts':
+            image_id = [k for k, v in captions_for_image.items() for _ in range(len(v))]
+            sentences = '\n'.join([c['caption'].replace('\n', ' ') for k, v in captions_for_image.items() for c in v])
+            final_tokenized_captions_for_image = {}
+
+        elif self.source == 'res':
+            index = [i for i, v in enumerate(captions_for_image)]
+            image_id = [v["image_id"] for v in captions_for_image]
+            sentences = '\n'.join(v["caption"].replace('\n', ' ') for v in captions_for_image )
+            final_tokenized_captions_for_index = []
+
         # ======================================================
         # save sentences to temporary file
         # ======================================================
@@ -60,11 +70,20 @@ class PTBTokenizer:
         # ======================================================
         # create dictionary for tokenized captions
         # ======================================================
-        for k, line in zip(image_id, lines):
-            if not k in final_tokenized_captions_for_image:
-                final_tokenized_captions_for_image[k] = []
-            tokenized_caption = ' '.join([w for w in line.rstrip().split(' ') \
-                    if w not in PUNCTUATIONS])
-            final_tokenized_captions_for_image[k].append(tokenized_caption)
+        if self.source == 'gts':
+            for k, line in zip(image_id, lines):
+                if not k in final_tokenized_captions_for_image:
+                    final_tokenized_captions_for_image[k] = []
+                tokenized_caption = ' '.join([w for w in line.rstrip().split(' ') \
+                        if w not in PUNCTUATIONS])
+                final_tokenized_captions_for_image[k].append(tokenized_caption)
 
-        return final_tokenized_captions_for_image
+            return final_tokenized_captions_for_image
+
+        elif self.source == 'res':
+            for k, img, line in zip(index, image_id, lines):
+                tokenized_caption = ' '.join([w for w in line.rstrip().split(' ') \
+                        if w not in PUNCTUATIONS])
+                final_tokenized_captions_for_index.append({'image_id': img, 'caption': [tokenized_caption]})
+
+            return final_tokenized_captions_for_index

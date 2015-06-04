@@ -27,13 +27,12 @@ class Cider:
         :return: cider (float) : computed CIDEr score for the corpus 
         """
 
-        imgIds = gts.keys()
-
         cider_scorer = CiderScorer(n=self._n)
 
-        for id in imgIds:
-            ref = gts[id]
-            hypo = res[id]
+        for res_id in res:
+
+            hypo = res_id['caption']
+            ref = gts[res_id['image_id']]
 
             # Sanity check.
             assert(type(hypo) is list)

@@ -5,10 +5,10 @@ Reference file: list of dict('image_id': image_id, 'caption': caption).
 Candidate file: list of dict('image_id': image_id, 'caption': caption). One caption per image.
 
 """
+import pdb
 import json
 import os
 from collections import defaultdict
-
 
 class LoadData():
     def __init__(self, path):
@@ -23,15 +23,13 @@ class LoadData():
         cand_list = json.loads(open(path_to_cand_file, 'r').read())
 
         gts = defaultdict(list)
-        res = defaultdict(list)
+        res = []
 
         for l in ref_list:
             gts[l['image_id']].append({"caption": l['caption']})
 
-        for l in cand_list:
-            # if more than 1 candidate sentence exists, ignore the rest and only keep first
-            if len(res[l['image_id']]) == 0:
-                res[l['image_id']].append({"caption": l['caption']})
-
+        res = cand_list;
+       
+        
         return gts, res
 
