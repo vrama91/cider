@@ -9,7 +9,7 @@ import pdb
 import json
 from pyciderevalcap.eval import CIDErEvalCap as ciderEval
 
-pathToData = '/Users/rama/Research/data/pyCider/'
+pathToData = 'data/'
 
 refName = 'pascal50S.json'
 candName = 'pascal_candsB.json'
