@@ -14,8 +14,7 @@ CIDEr-D (CIDEr Defended) which is more robust to gaming effects.
 ./PyDataFormat
 - loadData.py (load the json files for references and candidates)
 
-./results
-- {$result_file}.json 
+- {$result_file}.json (file with the CIDEr and CIDEr-D scores)
 
 ./pycocoevalcap: The folder where all evaluation codes are stored.
 - evals.py: Performs tokenization and runs both the metrics
@@ -26,8 +25,7 @@ CIDEr-D (CIDEr Defended) which is more robust to gaming effects.
 ## Instructions ##
 1. Set path to folder containing the reference and candidate json files.
 2. Sample json reference and candidate files are pascal50S.json and pascal_candsB.json
-3. Ensure candidate file has one caption for each image in the reference file, and no more.
-4. CIDEr scores are stored in "scores" variable
+4. CIDEr scores are stored in "scores" variable: scores['CIDEr'] -> CIDEr scores, scores['CIDErD'] -> CIDEr-D scores
 
 ## References ##
 
@@ -35,12 +33,7 @@ CIDEr-D (CIDEr Defended) which is more robust to gaming effects.
 - CIDEr: [CIDEr: Consensus-based Image Description Evaluation] (http://arxiv.org/pdf/1411.5726.pdf)
 
 ## Developers ##
-- Xinlei Chen (CMU)
-- Hao Fang (University of Washington)
-- Tsung-Yi Lin (Cornell)
 - Ramakrishna Vedantam (Virgina Tech)
 
-## Acknowledgement ##
-- David Chiang (University of Norte Dame)
-- Michael Denkowski (CMU)
-- Alexander Rush (Harvard University)
+## Acknowledgments ##
+- MS COCO Caption Evaluation Team
