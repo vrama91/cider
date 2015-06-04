@@ -9,8 +9,6 @@ import pdb
 import json
 from pyciderevalcap.eval import CIDErEvalCap as ciderEval
 
-with open(path)
-
 pathToData = 'data/'
 
 refName = 'pascal50S.json'
