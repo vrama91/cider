@@ -4,6 +4,9 @@ Consensus-based Image Description Evaluation (CIDEr Code)
 Evaluation code for CIDEr metric. Provides CIDEr as well as
 CIDEr-D (CIDEr Defended) which is more robust to gaming effects.
 
+## Important Note ##
+CIDEr by default computes IDF values using the reference sentences provided. Thus, CIDEr score for a reference dataset with only 1 image will be zero. Using more images (atleast 1000) will be better as IDF counts will be estimated more accurately.
+
 ## Requirements ##
 - java 1.8.0
 - python 2.7
