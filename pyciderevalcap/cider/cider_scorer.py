@@ -3,9 +3,9 @@
 # Ramakrishna Vedantam <vrama91@vt.edu>
 
 import copy
+import pickle
 from collections import defaultdict
 import numpy as np
-import pdb
 import math
 
 def precook(s, n=4, out=False):
@@ -103,7 +103,7 @@ class CiderScorer(object):
                 self.document_frequency[ngram] += 1
             # maxcounts[ngram] = max(maxcounts.get(ngram,0), count)
 
-    def compute_cider(self):
+    def compute_cider(self, df_mode="corpus"):
         def counts2vec(cnts):
             """
             Function maps counts of ngram to vector of tfidf weights.
@@ -122,7 +122,8 @@ class CiderScorer(object):
                 n = len(ngram)-1
                 # tf (term_freq) * idf (precomputed idf) for n-grams
                 vec[n][ngram] = float(term_freq)*(self.ref_len - df)
-                # compute norm for the vector.  the norm will be used for computing similarity
+                # compute norm for the vector.  the norm will be used for
+                # computing similarity
                 norm[n] += pow(vec[n][ngram], 2)
 
                 if n == 1:
@@ -156,7 +157,11 @@ class CiderScorer(object):
             return val
 
         # compute log reference length
-        self.ref_len = np.log(float(len(self.crefs)))
+        if df_mode == "corpus":
+            self.ref_len = np.log(float(len(self.crefs)))
+        elif df_mode == "coco-val":
+            # if coco option selected, use length of coco-val set
+            self.ref_len = np.log(float(40504))
 
         scores = []
         for test, refs in zip(self.ctest, self.crefs):
@@ -177,13 +182,17 @@ class CiderScorer(object):
             scores.append(score_avg)
         return scores
 
-    def compute_score(self, option=None, verbose=0):
+    def compute_score(self, df_mode, option=None, verbose=0):
         # compute idf
-        self.compute_doc_freq()
-        # assert to check document frequency
-        assert(len(self.ctest) >= max(self.document_frequency.values()))
+        if df_mode == "corpus":
+            self.compute_doc_freq()
+            # assert to check document frequency
+            assert(len(self.ctest) >= max(self.document_frequency.values()))
+            # import json for now and write the corresponding files
+        elif df_mode == "coco-val":
+            self.document_frequency = pickle.load(open('data/coco-val-df.p','r'))
         # compute cider score
-        score = self.compute_cider()
+        score = self.compute_cider(df_mode)
         # debug
         # print score
         return np.mean(np.array(score)), np.array(score)

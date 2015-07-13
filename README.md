@@ -5,7 +5,7 @@ Evaluation code for CIDEr metric. Provides CIDEr as well as
 CIDEr-D (CIDEr Defended) which is more robust to gaming effects.
 
 ## Important Note ##
-CIDEr by default computes IDF values using the reference sentences provided. Thus, CIDEr score for a reference dataset with only 1 image will be zero. Using more images (atleast 1000) will be better as IDF counts will be estimated more accurately.
+CIDEr by default (with idf parameter set to "corpus" mode) computes IDF values using the reference sentences provided. Thus, CIDEr score for a reference dataset with only 1 image will be zero. When evaluating using one (or few) images, set idf to "coco-val-df" instead, which uses IDF from the MSCOCO Vaildation Dataset for reliable results.
 
 ## Requirements ##
 - java 1.8.0
@@ -29,8 +29,9 @@ For running the ipython notebook file, update your Ipython to [Jupyter](https://
 - ciderD: CIDEr-D evaluation codes
 
 ## Instructions ##
-1. Set path to folder containing the reference and candidate json files.
-2. Sample json reference and candidate files are pascal50S.json and pascal_candsB.json
+1. Edit the params.json file to contain path to reference and candidate json files, and the result file where the scores are stored
+2. Set the "idf" value in params.json to "corpus" if not evaluating on a single image/instance. Set the "idf" value to "coco-val-df" if evaluating on a single image. In this case IDF values from the MSCOCO dataset are used
+3. Sample json reference and candidate files are pascal50S.json and pascal_candsB.json
 4. CIDEr scores are stored in "scores" variable: scores['CIDEr'] -> CIDEr scores, scores['CIDErD'] -> CIDEr-D scores
 
 ## References ##

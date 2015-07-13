@@ -5,7 +5,6 @@ Reference file: list of dict('image_id': image_id, 'caption': caption).
 Candidate file: list of dict('image_id': image_id, 'caption': caption).
 
 """
-import pdb
 import json
 import os
 from collections import defaultdict
@@ -29,7 +28,4 @@ class LoadData():
             gts[l['image_id']].append({"caption": l['caption']})
 
         res = cand_list;
-       
-        
         return gts, res
-

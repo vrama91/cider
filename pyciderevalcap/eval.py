@@ -2,10 +2,10 @@ __author__ = 'rama'
 from tokenizer.ptbtokenizer import PTBTokenizer
 from cider.cider import Cider
 from ciderD.ciderD import CiderD
-import pdb
+
 
 class CIDErEvalCap:
-    def __init__(self, gts, res):
+    def __init__(self, gts, res, df):
         print 'tokenization...'
         tokenizer = PTBTokenizer('gts')
         _gts = tokenizer.tokenize(gts)
@@ -16,6 +16,7 @@ class CIDErEvalCap:
 
         self.gts = _gts
         self.res = _res
+        self.df = df
 
     def evaluate(self):
         # =================================================
@@ -24,7 +25,7 @@ class CIDErEvalCap:
 
         print 'setting up scorers...'
         scorers = [
-            (Cider(), "CIDEr"), (CiderD(), "CIDErD")
+            (Cider(df=self.df), "CIDEr"), (CiderD(df=self.df), "CIDErD")
         ]
 
         # =================================================
