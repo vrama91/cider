@@ -8,6 +8,7 @@ import numpy as np
 import pdb
 import math
 import pickle
+import os
 
 def precook(s, n=4, out=False):
     """
@@ -192,8 +193,8 @@ class CiderScorer(object):
             # assert to check document frequency
             assert(len(self.ctest) >= max(self.document_frequency.values()))
             # import json for now and write the corresponding files
-        elif df_mode == "coco-val":
-            self.document_frequency = pickle.load(open('data/coco-val-df.p','r'))
+        else:
+            self.document_frequency = pickle.load(open(os.path.join('data', df_mode + '.p'),'r'))
         # compute cider score
         score = self.compute_cider(df_mode)
         # debug
