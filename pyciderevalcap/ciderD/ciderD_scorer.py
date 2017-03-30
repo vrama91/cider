@@ -163,7 +163,7 @@ class CiderScorer(object):
         # compute log reference length
         if df_mode == "corpus":
             self.ref_len = np.log(float(len(self.crefs)))
-        elif df_mode == "coco-val":
+        elif df_mode == "coco-val-df":
             # if coco option selected, use length of coco-val set
             self.ref_len = np.log(float(40504))
 
